@@ -1,2 +1,2 @@
 # secret-cli
-JihyunLab Secret CLI.
+JihyunLab secret cli.
