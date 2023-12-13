@@ -1,4 +1,4 @@
-import { Text as TextCrypto } from '../../src/index';
+import { Text as TextCrypto } from '@jihyunlab/secret';
 
 export const Text = {
   encrypt: (text: string, key?: string) => {

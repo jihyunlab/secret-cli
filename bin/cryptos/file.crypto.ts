@@ -1,4 +1,4 @@
-import { File as FileCrypto, LocationHelper } from '../../src/index';
+import { File as FileCrypto, LocationHelper } from '@jihyunlab/secret';
 import { readFileSync, writeFileSync } from 'fs';
 
 export const File = {

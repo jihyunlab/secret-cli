@@ -1,26 +1,24 @@
 {
-  "name": "@jihyunlab/secret",
-  "version": "1.0.2",
+  "name": "@jihyunlab/secret-cli",
+  "version": "1.0.0",
   "description": "JihyunLab Secret CLI.",
   "license": "MIT",
   "author": "JihyunLab <info@jihyunlab.com> (https://jihyunlab.com)",
   "homepage": "https://jihyunlab.com/library/npm/secret-cli",
   "repository": "https://github.com/jihyunlab/secret-cli",
   "bugs": "https://github.com/jihyunlab/secret-cli/issues",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
   "bin": {
-    "secret": "dist/bin/secret.js"
+    "secret": "dist/secret.js"
   },
   "scripts": {
     "build": "tsc --build",
     "start": "tsc --build && node dist/src/index.js",
-    "clean": "tsc --build --clean",
-    "test": "jest"
+    "clean": "tsc --build --clean"
   },
   "keywords": [
     "jihyunlab",
     "secret",
+    "cli",
     "crypto",
     "encryption",
     "decryption",
@@ -28,22 +26,14 @@
     "file",
     "env"
   ],
-  "engines": {
-    "node": ">=10"
-  },
   "dependencies": {
-    "@jihyunlab/crypto": "^1.0.4",
-    "commander": "^11.1.0",
-    "dotenv": "^16.3.1",
-    "ignore": "^5.3.0"
+    "@jihyunlab/secret": "^1.0.0",
+    "commander": "^11.1.0"
   },
   "devDependencies": {
     "@jihyunlab/eslint-config": "^1.1.1",
     "@jihyunlab/prettier-config": "^1.1.1",
-    "@types/jest": "^29.5.8",
     "@types/node": "^20.9.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   }
 }

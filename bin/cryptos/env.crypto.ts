@@ -1,4 +1,4 @@
-import { Env as EnvCrypto, LocationHelper } from '../../src/index';
+import { Env as EnvCrypto, LocationHelper } from '@jihyunlab/secret';
 import { join } from 'path';
 import { cpSync, readFileSync, rmSync, writeFileSync } from 'fs';
 
