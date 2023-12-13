@@ -68,7 +68,7 @@ export const Env = {
           if (locationOutput) {
             output = join(locationOutput, file.replace(location, ''));
             EnvCrypto.encrypt(file, output, key);
-            console.log(`encrypted: ${LocationHelper.toRelative(output)}`);
+            console.log(`encrypted: ${LocationHelper.toRelative(file)}`);
           }
         }
 
@@ -171,7 +171,7 @@ export const Env = {
           if (locationOutput) {
             output = join(locationOutput, file.replace(location, ''));
             EnvCrypto.decrypt(file, output, key);
-            console.log(`decrypted: ${LocationHelper.toRelative(output)}`);
+            console.log(`decrypted: ${LocationHelper.toRelative(file)}`);
           }
         }
 
