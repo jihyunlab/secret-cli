@@ -4,7 +4,7 @@
 
 @jihyunlab/secret-cli is the command line interface tool for @jihyunlab/secret.\
 @jihyunlab/secret-cli provides the ability to encrypt not only text and files, but also all files within a directory, or only all .env files within a directory.\
-Encrypted .env files are decrypted by @jihyunlab/secret when loaded by dotenv at runtime.
+Encrypted .env files are decrypted by [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) when loaded by dotenv at runtime.
 
 ## Requirements
 
@@ -138,9 +138,13 @@ When encrypting or decrypting a directory, you can specify which directory to ex
 $ secret encrypt -d dir -o dir_enc
 
 input: dir
+encrypted: dir\.env
 encrypted: dir\file
 directory encryption success.
 ```
+
+If you encrypt the directory containing the .env with directory encryption, the entire .env file will be encrypted.\
+Dotenv cannot properly recognize .env files if the entire file is encrypted. @jihyunlab/secret-cli provides a separate .env encryption option.
 
 If you do not specify a directory to export to when encrypting, the existing directory will be overwritten with the encrypted results.
 
@@ -148,6 +152,7 @@ If you do not specify a directory to export to when encrypting, the existing dir
 $ secret encrypt -d dir
 
 input: dir
+encrypted: dir\.env
 encrypted: dir\file
 directory encryption success.
 ```
@@ -180,6 +185,8 @@ input: dir
 encrypted: dir\.env
 .env directory encryption success.
 ```
+
+For more information about using encrypted .env files, see the [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) documentation.
 
 ## Credits
 
