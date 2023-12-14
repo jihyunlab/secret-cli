@@ -188,6 +188,26 @@ encrypted: dir\.env
 
 For more information about using encrypted .env files, see the [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) documentation.
 
+## .secretignore
+
+When encrypting a directory, you can create a .secretignore file to specify files or directories that should not be encrypted.
+
+```.secretignore
+/.git
+/node_modules
+/dist
+.DS_Store
+LICENSE
+README.md
+package.json
+```
+
+Run the command from the directory where .secretignore is located.
+
+```bash
+$ secret encrypt -d .
+```
+
 ## Credits
 
 Authored and maintained by JihyunLab <<info@jihyunlab.com>>
