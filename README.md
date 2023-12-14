@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/@jihyunlab/secret-cli.svg?style=flat-square)](https://www.npmjs.com/package/@jihyunlab/secret-cli?activeTab=versions) [![Downloads](https://img.shields.io/npm/dt/@jihyunlab/secret-cli.svg?style=flat-square)](https://www.npmjs.com/package/@jihyunlab/secret-cli) [![Last commit](https://img.shields.io/github/last-commit/jihyunlab/secret-cli.svg?style=flat-square)](https://github.com/jihyunlab/secret-cli/graphs/commit-activity) [![License](https://img.shields.io/github/license/jihyunlab/secret-cli.svg?style=flat-square)](https://github.com/jihyunlab/secret-cli/blob/master/LICENSE)
 
-@jihyunlab/secret-cli is the command line interface tool for @jihyunlab/secret.\
+@jihyunlab/secret-cli is the command line interface tool for [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret).\
 @jihyunlab/secret-cli provides the ability to encrypt not only text and files, but also all files within a directory, or only all .env files within a directory.\
 Encrypted .env files are decrypted by [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) when loaded by dotenv at runtime.
 
@@ -143,8 +143,8 @@ encrypted: dir\file
 directory encryption success.
 ```
 
-If you encrypt the directory containing the .env with directory encryption, the entire .env file will be encrypted.\
-Dotenv cannot properly recognize .env files if the entire file is encrypted. @jihyunlab/secret-cli provides a separate .env encryption option.
+If you encrypt the directory containing the .env with directory encryption, the entire .env file will be encrypted. Dotenv cannot properly recognize .env files if the entire file is encrypted.\
+@jihyunlab/secret-cli provides a separate .env encryption option.
 
 If you do not specify a directory to export to when encrypting, the existing directory will be overwritten with the encrypted results.
 
