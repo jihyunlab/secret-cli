@@ -27,7 +27,7 @@
     "env"
   ],
   "dependencies": {
-    "@jihyunlab/secret": "^1.0.1",
+    "@jihyunlab/secret": "^1.0.2",
     "commander": "^11.1.0"
   },
   "devDependencies": {
