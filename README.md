@@ -138,8 +138,8 @@ When encrypting or decrypting a directory, you can specify which directory to ex
 $ secret encrypt -d dir -o dir_enc
 
 input: dir
-encrypted: dir\.env
-encrypted: dir\file
+encrypted: dir_enc\.env
+encrypted: dir_enc\file
 directory encryption success.
 ```
 
@@ -173,7 +173,7 @@ encrypted: .env
 ```
 
 ```.env
-KEY=98623ca99db8846ef65d23e4508ea26d132d98b4d0e2f4241a8f95194e6fb30b1f
+TEXT=d879f8dfb00b7f9d73bf755569726ed296332765988e28dda664350291f4ca382cff501e82
 ```
 
 Encrypts all .env files within a directory. If you enter a directory, all files starting with .env within that directory will be encrypted.
