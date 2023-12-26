@@ -9,7 +9,7 @@ describe('Directory', () => {
   const keyString = 'JihyunLab';
   const textString = 'Welcome to JihyunLab.';
 
-  const base = 'test-location';
+  const base = 'test-directory';
 
   const dir = join(base, 'dir');
   const subDir = join(dir, 'sub-dir');
@@ -34,7 +34,7 @@ describe('Directory', () => {
   const ignore = '.secretignore';
   const ignoreString = 'sub_sub_dir_file.txt';
 
-  const temporaryDir = '.secret_temporary';
+  const temporaryDir = '.secret_directory_temporary';
 
   class CustomException {}
 
@@ -112,37 +112,30 @@ describe('Directory', () => {
   });
 
   test('ignore()', () => {
-    const cwd = process.cwd();
     const plain = readFileSync(subSubDirFile);
 
-    writeFileSync(join(base, ignore), ignoreString);
+    writeFileSync(ignore, ignoreString);
     writeFileSync(join(dir, ignore), ignoreString);
 
-    process.chdir(join(cwd, base));
+    Directory.encrypt(dir);
+    Directory.decrypt(dir);
 
-    Directory.encrypt('dir');
-    Directory.decrypt('dir');
-
-    process.chdir(cwd);
+    rmSync(ignore, { recursive: true, force: true });
     expect(plain).toStrictEqual(readFileSync(subSubDirFile));
   });
 
   test('temporary()', () => {
     const plain = readFileSync(file);
 
-    const cwd = process.cwd();
-    process.chdir(join(cwd, base));
-
     mkdirSync(temporaryDir, { recursive: true });
-    Directory.encrypt('dir');
+    Directory.encrypt(dir);
 
     rmSync(temporaryDir, { recursive: true, force: true });
     mkdirSync(temporaryDir, { recursive: true });
 
-    Directory.decrypt('dir');
+    Directory.decrypt(dir);
     rmSync(temporaryDir, { recursive: true, force: true });
 
-    process.chdir(cwd);
     expect(plain).toStrictEqual(readFileSync(file));
   });
 

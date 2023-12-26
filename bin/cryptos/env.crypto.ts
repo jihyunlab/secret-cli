@@ -40,7 +40,7 @@ export const Env = {
 
         if (!locationOutput) {
           temporaryOutput = true;
-          locationOutput = LocationHelper.toAbsolute('.secret_temporary');
+          locationOutput = LocationHelper.toAbsolute('.secret_env_temporary');
 
           if (LocationHelper.isExist(locationOutput)) {
             rmSync(locationOutput, { recursive: true, force: true });
@@ -150,7 +150,7 @@ export const Env = {
 
         if (!locationOutput) {
           temporaryOutput = true;
-          locationOutput = LocationHelper.toAbsolute('.secret_temporary');
+          locationOutput = LocationHelper.toAbsolute('.secret_env_temporary');
 
           if (LocationHelper.isExist(locationOutput)) {
             rmSync(locationOutput, { recursive: true, force: true });
