@@ -37,8 +37,6 @@ describe('File', () => {
     };
 
     writeFileSync(file, textString);
-
-    FileCrypto.encrypt(file, fileEnc);
   });
 
   afterEach(() => {
