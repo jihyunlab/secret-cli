@@ -114,15 +114,18 @@ describe('Directory', () => {
   });
 
   test('ignore()', () => {
-    writeFileSync(ignore, ignoreString);
-    writeFileSync(join(dir, ignore), ignoreString);
-
+    const cwd = process.cwd();
     const plain = readFileSync(subSubDirFile);
 
-    Directory.encrypt(dir);
-    Directory.decrypt(dir);
+    writeFileSync(join(base, ignore), ignoreString);
+    writeFileSync(join(dir, ignore), ignoreString);
 
-    rmSync(ignore, { recursive: true, force: true });
+    process.chdir(join(cwd, base));
+
+    Directory.encrypt('dir');
+    Directory.decrypt('dir');
+
+    process.chdir(cwd);
     expect(plain).toStrictEqual(readFileSync(subSubDirFile));
   });
 
