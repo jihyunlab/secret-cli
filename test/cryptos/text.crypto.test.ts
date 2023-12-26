@@ -1,7 +1,9 @@
-import { Text as TextCrypto } from '@jihyunlab/secret';
 import { Text } from '../../bin/cryptos/text.crypto';
+import { Text as TextCrypto } from '@jihyunlab/secret';
 
 describe('Text', () => {
+  const processEnv = process.env;
+
   const keyString = 'JihyunLab';
   const textString = 'Welcome to JihyunLab.';
 
@@ -9,7 +11,15 @@ describe('Text', () => {
 
   beforeEach(() => {
     console.log = jest.fn();
-    process.env.JIHYUNLAB_SECRET_KEY = keyString;
+
+    process.env = {
+      ...processEnv,
+      JIHYUNLAB_SECRET_KEY: keyString,
+    };
+  });
+
+  afterEach(() => {
+    process.env = processEnv;
   });
 
   test('environment key()', () => {

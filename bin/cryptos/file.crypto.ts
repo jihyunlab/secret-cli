@@ -4,6 +4,8 @@ import { readFileSync, writeFileSync } from 'fs';
 export const File = {
   encrypt: (input: string, output?: string, bak = false, key?: string) => {
     try {
+      let locationOutput: string;
+
       const location = LocationHelper.toAbsolute(input);
       console.log(`input: ${LocationHelper.toRelative(location)}`);
 
@@ -18,13 +20,16 @@ export const File = {
       }
 
       if (output) {
-        console.log(`encrypted: ${LocationHelper.toRelative(output)}`);
+        locationOutput = LocationHelper.toRelative(output);
       } else {
         writeFileSync(location, encrypted);
-        console.log(`encrypted: ${LocationHelper.toRelative(location)}`);
+        locationOutput = LocationHelper.toRelative(location);
       }
 
+      console.log(`encrypted: ${locationOutput}`);
       console.log('file encryption success.');
+
+      return locationOutput;
     } catch (error) {
       if (error instanceof Error) {
         console.log(`error: ${error.message}`);
@@ -36,6 +41,8 @@ export const File = {
 
   decrypt: (input: string, output?: string, bak = false, key?: string) => {
     try {
+      let locationOutput: string;
+
       const location = LocationHelper.toAbsolute(input);
       console.log(`input: ${LocationHelper.toRelative(location)}`);
 
@@ -50,13 +57,16 @@ export const File = {
       }
 
       if (output) {
-        console.log(`decrypted: ${LocationHelper.toRelative(output)}`);
+        locationOutput = LocationHelper.toRelative(output);
       } else {
         writeFileSync(location, decrypted);
-        console.log(`decrypted: ${LocationHelper.toRelative(location)}`);
+        locationOutput = LocationHelper.toRelative(location);
       }
 
+      console.log(`decrypted: ${locationOutput}`);
       console.log('file decryption success.');
+
+      return locationOutput;
     } catch (error) {
       if (error instanceof Error) {
         console.log(`error: ${error.message}`);
