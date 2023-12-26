@@ -63,7 +63,6 @@ describe('Env', () => {
   afterEach(() => {
     process.env = processEnv;
 
-    rmSync(ignore, { recursive: true, force: true });
     rmSync(temporaryDir, { recursive: true, force: true });
 
     rmSync(subSubDirEnc, { recursive: true, force: true });
@@ -162,6 +161,7 @@ describe('Env', () => {
     Env.encrypt(dir);
     Env.decrypt(dir);
 
+    rmSync(ignore, { recursive: true, force: true });
     expect(plain).toStrictEqual(readFileSync(subSubDirEnv));
   });
 
