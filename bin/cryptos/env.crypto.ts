@@ -40,7 +40,7 @@ export const Env = {
 
         if (!locationOutput) {
           temporaryOutput = true;
-          locationOutput = LocationHelper.toAbsolute('.secret_env_temporary');
+          locationOutput = LocationHelper.toAbsolute('.secret_temporary');
 
           if (LocationHelper.isExist(locationOutput)) {
             rmSync(locationOutput, { recursive: true, force: true });
@@ -86,6 +86,7 @@ export const Env = {
         }
 
         console.log('.env directory encryption success.');
+        return 'success';
       } else {
         const encrypted = EnvCrypto.encrypt(location, output, key);
 
@@ -101,6 +102,7 @@ export const Env = {
         }
 
         console.log('.env file encryption success.');
+        return 'success';
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -148,7 +150,7 @@ export const Env = {
 
         if (!locationOutput) {
           temporaryOutput = true;
-          locationOutput = LocationHelper.toAbsolute('.secret_env_temporary');
+          locationOutput = LocationHelper.toAbsolute('.secret_temporary');
 
           if (LocationHelper.isExist(locationOutput)) {
             rmSync(locationOutput, { recursive: true, force: true });
@@ -194,6 +196,7 @@ export const Env = {
         }
 
         console.log('.env directory decryption success.');
+        return 'success';
       } else {
         const decrypted = EnvCrypto.decrypt(location, output, key);
 
@@ -209,6 +212,7 @@ export const Env = {
         }
 
         console.log('.env file decryption success.');
+        return 'success';
       }
     } catch (error) {
       if (error instanceof Error) {

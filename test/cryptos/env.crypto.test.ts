@@ -38,7 +38,7 @@ describe('Env', () => {
   const ignore = '.secretignore';
   const ignoreString = '.env_sub_sub_dir';
 
-  const temporaryDir = '.secret_env_temporary';
+  const temporaryDir = '.secret_temporary';
 
   class CustomException {}
 
@@ -62,8 +62,6 @@ describe('Env', () => {
 
   afterEach(() => {
     process.env = processEnv;
-
-    rmSync(temporaryDir, { recursive: true, force: true });
 
     rmSync(subSubDirEnc, { recursive: true, force: true });
     rmSync(subDirEnc, { recursive: true, force: true });
@@ -171,15 +169,19 @@ describe('Env', () => {
   test('temporary()', () => {
     const plain = readFileSync(env);
 
+    const cwd = process.cwd();
+    process.chdir(join(cwd, base));
+
     mkdirSync(temporaryDir, { recursive: true });
-    Env.encrypt(dir);
+    Env.encrypt('dir');
 
     rmSync(temporaryDir, { recursive: true, force: true });
     mkdirSync(temporaryDir, { recursive: true });
 
-    Env.decrypt(dir);
+    Env.decrypt('dir');
     rmSync(temporaryDir, { recursive: true, force: true });
 
+    process.chdir(cwd);
     expect(plain).toStrictEqual(readFileSync(env));
   });
 

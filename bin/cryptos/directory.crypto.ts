@@ -43,7 +43,7 @@ export const Directory = {
 
       if (!locationOutput) {
         temporaryOutput = true;
-        locationOutput = LocationHelper.toAbsolute('.secret_directory_temporary');
+        locationOutput = LocationHelper.toAbsolute('.secret_temporary');
 
         if (LocationHelper.isExist(locationOutput)) {
           rmSync(locationOutput, { recursive: true, force: true });
@@ -85,6 +85,7 @@ export const Directory = {
       }
 
       console.log('directory encryption success.');
+      return 'success';
     } catch (error) {
       if (error instanceof Error) {
         console.log(`error: ${error.message}`);
@@ -134,7 +135,7 @@ export const Directory = {
 
       if (!locationOutput) {
         temporaryOutput = true;
-        locationOutput = LocationHelper.toAbsolute('.secret_directory_temporary');
+        locationOutput = LocationHelper.toAbsolute('.secret_temporary');
 
         if (LocationHelper.isExist(locationOutput)) {
           rmSync(locationOutput, { recursive: true, force: true });
@@ -176,6 +177,7 @@ export const Directory = {
       }
 
       console.log('directory decryption success.');
+      return 'success';
     } catch (error) {
       if (error instanceof Error) {
         console.log(`error: ${error.message}`);
