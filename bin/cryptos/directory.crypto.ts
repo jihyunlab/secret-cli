@@ -43,7 +43,7 @@ export const Directory = {
 
       if (!locationOutput) {
         temporaryOutput = true;
-        locationOutput = LocationHelper.toAbsolute('secret_temporary');
+        locationOutput = LocationHelper.toAbsolute('.secret_directory_temporary');
 
         if (LocationHelper.isExist(locationOutput)) {
           rmSync(locationOutput, { recursive: true, force: true });
@@ -134,7 +134,7 @@ export const Directory = {
 
       if (!locationOutput) {
         temporaryOutput = true;
-        locationOutput = LocationHelper.toAbsolute('secret_temporary');
+        locationOutput = LocationHelper.toAbsolute('.secret_directory_temporary');
 
         if (LocationHelper.isExist(locationOutput)) {
           rmSync(locationOutput, { recursive: true, force: true });

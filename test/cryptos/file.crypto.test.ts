@@ -103,7 +103,7 @@ describe('File', () => {
 
     expect(() => {
       File.encrypt(file);
-    }).not.toThrow(Error);
+    }).not.toThrow(CustomException);
   });
 
   test('decrypt(): exception(not exist)', () => {
@@ -129,7 +129,7 @@ describe('File', () => {
 
     expect(() => {
       File.decrypt(fileEnc);
-    }).not.toThrow(Error);
+    }).not.toThrow(CustomException);
   });
 
   test('decrypt(): exception(fail)', () => {

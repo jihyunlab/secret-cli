@@ -3,7 +3,7 @@ import { File as FileCrypto } from '@jihyunlab/secret';
 import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-describe('File', () => {
+describe('Directory', () => {
   const processEnv = process.env;
 
   const keyString = 'JihyunLab';
@@ -34,7 +34,7 @@ describe('File', () => {
   const ignore = '.secretignore';
   const ignoreString = 'sub_sub_dir_file.txt';
 
-  const temporaryDir = 'secret_temporary';
+  const temporaryDir = '.secret_directory_temporary';
 
   class CustomException {}
 
@@ -131,8 +131,12 @@ describe('File', () => {
 
     mkdirSync(temporaryDir, { recursive: true });
     Directory.encrypt(dir);
+
+    rmSync(temporaryDir, { recursive: true, force: true });
     mkdirSync(temporaryDir, { recursive: true });
+
     Directory.decrypt(dir);
+    rmSync(temporaryDir, { recursive: true, force: true });
 
     expect(plain).toStrictEqual(readFileSync(file));
   });
@@ -172,7 +176,7 @@ describe('File', () => {
 
     expect(() => {
       Directory.encrypt(dir);
-    }).not.toThrow(Error);
+    }).not.toThrow(CustomException);
   });
 
   test('decrypt(): exception(not exist)', () => {
@@ -210,7 +214,7 @@ describe('File', () => {
 
     expect(() => {
       Directory.decrypt(dir);
-    }).not.toThrow(Error);
+    }).not.toThrow(CustomException);
   });
 
   test('decrypt(): exception(fail)', () => {

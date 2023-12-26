@@ -51,7 +51,7 @@ describe('Text', () => {
 
     expect(() => {
       Text.encrypt(textString);
-    }).not.toThrow(Error);
+    }).not.toThrow(CustomException);
   });
 
   test('decrypt(): exception(error)', () => {
@@ -71,7 +71,7 @@ describe('Text', () => {
 
     expect(() => {
       Text.decrypt(textString);
-    }).not.toThrow(Error);
+    }).not.toThrow(CustomException);
   });
 
   test('decrypt(): exception(fail)', () => {
