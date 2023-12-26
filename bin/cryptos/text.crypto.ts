@@ -8,6 +8,8 @@ export const Text = {
 
       console.log(`encrypted: ${encrypted}`);
       console.log('text encryption success.');
+
+      return encrypted;
     } catch (error) {
       if (error instanceof Error) {
         console.log(`error: ${error.message}`);
@@ -24,6 +26,8 @@ export const Text = {
 
       console.log(`decrypted: ${decrypted}`);
       console.log('text decryption success.');
+
+      return decrypted;
     } catch (error) {
       if (error instanceof Error) {
         console.log(`error: ${error.message}`);
