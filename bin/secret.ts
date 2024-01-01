@@ -33,7 +33,7 @@ const program = new Command('secret')
   .addHelpText('after', '  secret encrypt -e .env')
   .addHelpText('after', '  secret encrypt -e dir')
   .addHelpText('after', '  secret encrypt -k key -e dir -o dir_enc -b')
-  .version('1.0.8');
+  .version('1.0.9');
 
 function parseOptions(json: Object): {
   key?: string;
