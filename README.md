@@ -223,7 +223,7 @@ ENV_KEY_2=ENV_VALUE_2
 
 ## @jihyunlab/secret
 
-[@jihyunlab/secret](https://www.jihyunlab.com/library/npm/secret) implements the .env decryption functionality for Node.js applications.
+[@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) implements the .env decryption functionality for Node.js applications.
 
 To decrypt the encrypted .env file from @jihyunlab/secret-cli in a Node.js application, you can install and use @jihyunlab/secret.
 
@@ -240,7 +240,7 @@ const value = await cipher.decrypt(process.env.ENV_KEY);
 
 ## @jihyunlab/web-secret
 
-[@jihyunlab/web-secret](https://www.jihyunlab.com/library/npm/web-secret) implements the .env decryption functionality for web applications.
+[@jihyunlab/web-secret](https://www.npmjs.com/package/@jihyunlab/web-secret) implements the .env decryption functionality for web applications.
 
 To decrypt the encrypted .env file from @jihyunlab/secret-cli in a web application, you can install and use @jihyunlab/web-secret.
 
