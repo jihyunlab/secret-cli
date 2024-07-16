@@ -3,15 +3,13 @@
 [![Version](https://img.shields.io/npm/v/@jihyunlab/secret-cli.svg?style=flat-square)](https://www.npmjs.com/package/@jihyunlab/secret-cli?activeTab=versions) [![Downloads](https://img.shields.io/npm/dt/@jihyunlab/secret-cli.svg?style=flat-square)](https://www.npmjs.com/package/@jihyunlab/secret-cli) [![Last commit](https://img.shields.io/github/last-commit/jihyunlab/secret-cli.svg?style=flat-square)](https://github.com/jihyunlab/secret-cli/graphs/commit-activity) [![License](https://img.shields.io/github/license/jihyunlab/secret-cli.svg?style=flat-square)](https://github.com/jihyunlab/secret-cli/blob/master/LICENSE) [![Linter](https://img.shields.io/badge/linter-eslint-blue?style=flat-square)](https://eslint.org) [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)\
 [![Build](https://github.com/jihyunlab/secret-cli/actions/workflows/build.yml/badge.svg)](https://github.com/jihyunlab/secret-cli/actions/workflows/build.yml) [![Lint](https://github.com/jihyunlab/secret-cli/actions/workflows/lint.yml/badge.svg)](https://github.com/jihyunlab/secret-cli/actions/workflows/lint.yml) [![codecov](https://codecov.io/gh/jihyunlab/secret-cli/graph/badge.svg?token=6J20G3LCG3)](https://codecov.io/gh/jihyunlab/secret-cli)
 
-@jihyunlab/secret-cli is the command line interface tool for [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret).\
-@jihyunlab/secret-cli provides the ability to encrypt not only text and files, but also all files within a directory, or only all .env files within a directory.\
-Encrypted .env files are decrypted by [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) when loaded by dotenv at runtime.
+@jihyunlab/secret-cli is a command-line interface tool developed for encrypting .env files.
 
-## Requirements
+@jihyunlab/secret-cli encrypts .env files, which can be decrypted by @jihyunlab/secret and @jihyunlab/web-secret depending on the runtime environment.
 
-Node.js
+The encryption function is implemented with [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) and provides encryption for AES 256 GCM.
 
-## Setup
+## Installation
 
 ```bash
 npm i -g @jihyunlab/secret-cli
@@ -19,194 +17,242 @@ npm i -g @jihyunlab/secret-cli
 
 ## Encryption key
 
-If you register JIHYUNLAB_SECRET_KEY in a system or user environment variable, that environment variable will be used as the encryption key during encryption.
+If you register JIHYUNLAB_SECRET_KEY in system or user environment variables, it will be used as the encryption key during encryption.
+
+If you prefer to manage the encryption key separately, you can directly input the encryption key to encrypt or decrypt the .env file.
 
 ```bash
-export JIHYUNLAB_SECRET_KEY=YourKey
+export JIHYUNLAB_SECRET_KEY=YourSecretKey
 ```
 
 ## Usage
 
 ```bash
-$ secret help
+secret --help
+```
 
+```
 Usage: secret [options] [command]
 
-JihyunLab secret cli
+JihyunLab Secret CLI
 
 Options:
-  -V, --version                 output the version number
-  -h, --help                    display help for command
+  -V, --version                output the version number
+  -h, --help                   display help for command
 
 Commands:
-  encrypt|e [options] <target>
-  decrypt|d [options] <target>
-  help [command]                display help for command
+  encrypt|e [options] <input>  encrypt a file
+  decrypt|d [options] <input>  decrypt a file
+  help [command]               display help for command
 
-Usage examples(help):
-  secret encrypt -h
-  secret decrypt -h
+Usage (help):
+  secret encrypt --help
+  secret decrypt --help
 
-Usage examples(text):
-  secret encrypt -t text
-  secret decrypt -t text
+Usage (.env encryption):
+  secret encrypt --env .env --out .env.enc
+  secret encrypt --env .env --key ENV_KEY --out .env.enc
 
-Usage examples(file):
-  secret encrypt -f file.txt
-  secret decrypt -f file.txt
-  secret encrypt -k key -f file.txt -o file_enc.txt -b
-
-Usage examples(dir):
-  secret encrypt -d dir
-  secret decrypt -d dir
-  secret encrypt -k key -d dir -o dir_enc -b
-
-Usage examples(.env):
-  secret encrypt -e .env
-  secret encrypt -e dir
-  secret encrypt -k key -e dir -o dir_enc -b
+Usage (.env decryption):
+  secret decrypt --env .env.enc --out .env.dec
+  secret decrypt --env .env.enc --key ENV_KEY --out .env.dec
 ```
 
-## Text encryption
+## Encrypting .env file
 
-Text encryption encrypts the input text and returns an encrypted hex string.
+Encryption of .env files is based on the following .env file.
+
+```
+ENV_KEY=ENV_VALUE
+ENV_KEY_1=ENV_VALUE_1
+ENV_KEY_2=ENV_VALUE_2
+```
+
+### Encrypting all keys
+
+Encrypt all key values in the .env file.
 
 ```bash
-$ secret encrypt -t string
-
-text: string
-encrypted: 4c6b76bdcb643c8536f9ba6f39c29d2126b2a551eac324145a2bf09409fbc4724169
-text encryption success.
+secret encrypt --env .env --out .env.enc
 ```
 
-Instead of using an encryption key from an environment variable, you can input the key directly.
+```
+Input: .env
+Output: .env.enc
+
+Encryption process:
+- Using JIHYUNLAB_SECRET_KEY
+- ENV_KEY ... [OK]
+- ENV_KEY_1 ... [OK]
+- ENV_KEY_2 ... [OK]
+- Encryption completed successfully
+
+Summary:
+- Using JIHYUNLAB_SECRET_KEY
+- Overwriting existing file
+- .env encrypted to .env.enc
+```
+
+```
+ENV_KEY=8c22dbcce705a1b95df2c7841f6735eba5d91bcecf1c1132ec35fd5a976dd8556763649075
+ENV_KEY_1=17022b50356a3da6bad09e8012830a7078058796fcd75c594a180802320b009385761c7ce66208
+ENV_KEY_2=f4d96b31dbbace4bd769c30a430da7f142c4fa058c565a80d2fb3e101cca29c0f8bfc106076aaa
+```
+
+### Encrypting a specific key
+
+Encrypt specific key values in the .env file.
 
 ```bash
-$ secret encrypt -k key -t string
-
-text: string
-encrypted: d00853715358ebc3ab657820b7510d02e88a38d3ac5e7c2f3578f5ef52903853d96b
-text encryption success.
+secret encrypt --env .env --key ENV_KEY --out .env.enc
 ```
 
-Text encrypted with the encrypt command are decrypted with the decrypt command.
+```
+Input: .env
+Output: .env.enc
+
+Encryption process:
+- Using JIHYUNLAB_SECRET_KEY
+- ENV_KEY ... [OK]
+- ENV_KEY_1 ... [Skipped]
+- ENV_KEY_2 ... [Skipped]
+- Encryption completed successfully
+
+Summary:
+- Using JIHYUNLAB_SECRET_KEY
+- Overwriting existing file
+- .env encrypted to .env.enc
+```
+
+```
+ENV_KEY=f175768a27461c527f5ae24b728906f8ce77fc8f82109184a5c2528a5e77ed4159066862e7
+ENV_KEY_1=ENV_VALUE_1
+ENV_KEY_2=ENV_VALUE_2
+```
+
+You can encrypt multiple specific key values at once.
 
 ```bash
-$ secret decrypt -t 4c6b76bdcb643c8536f9ba6f39c29d2126b2a551eac324145a2bf09409fbc4724169
-
-text: 4c6b76bdcb643c8536f9ba6f39c29d2126b2a551eac324145a2bf09409fbc4724169
-decrypted: string
-text decryption success.
+secret encrypt --env .env --key ENV_KEY_1 --key ENV_KEY_2 --out .env.enc
 ```
 
-## File encryption
+```
+Input: .env
+Output: .env.enc
 
-When encrypting or decrypting files, you can specify which files to export.
+Encryption process:
+- Using JIHYUNLAB_SECRET_KEY
+- ENV_KEY ... [Skipped]
+- ENV_KEY_1 ... [OK]
+- ENV_KEY_2 ... [OK]
+- Encryption completed successfully
+
+Summary:
+- Using JIHYUNLAB_SECRET_KEY
+- Overwriting existing file
+- .env encrypted to .env.enc
+```
+
+```
+ENV_KEY=ENV_VALUE
+ENV_KEY_1=deb8ec8c77e3e1c4a473f63924cc550179283294fb5d933299ecfcbc3673c79e6c19ef218c0a86
+ENV_KEY_2=c11a9a4dfd7d9ed5553b072b1bf491e37c1b3233cb521c113f7fc3d96bb282f2579678c4417cc4
+```
+
+### Entering encryption key directly
+
+You can encrypt using a separately managed encryption key by entering it directly.
 
 ```bash
-$ secret encrypt -f file -o file_enc
-
-input: file
-encrypted: file_enc
-file encryption success.
+secret encrypt --env .env --secret YourSecretKey --out .env.enc
 ```
 
-If you do not specify which files to export when encrypting them, the encrypted results will overwrite the existing files.
+```
+Input: .env
+Output: .env.enc
+
+Encryption process:
+- Using input secret
+- ENV_KEY ... [OK]
+- ENV_KEY_1 ... [OK]
+- ENV_KEY_2 ... [OK]
+- Encryption completed successfully
+
+Summary:
+- Using input secret
+- Overwriting existing file
+- .env encrypted to .env.enc
+```
+
+```
+ENV_KEY=5b47faa38e6a9cb2fd65b34dff0a9befc67d77bc6a4a352c28534fed195dfd9ca1f9917af8
+ENV_KEY_1=d37f8e719afed09d28c19f7b29c42398f5b942623e23082532cd5bc6bcf75625bf73a4104e38a7
+ENV_KEY_2=3e49f6218bb1220e10d3d4165ef60a0ad43499371ba7d1142d2f65b142c5b96d3dc3a2f0b97244
+```
+
+### Decryption
+
+You can decrypt the encrypted .env file using the same method as encryption.
 
 ```bash
-$ secret encrypt -f file
-
-input: file
-encrypted: file
-file encryption success.
+secret decrypt --env .env.enc --key ENV_KEY --out .env.dec
 ```
 
-Files, directories, and .env files encrypted with the encrypt command are decrypted with the decrypt command.
+```
+Input: .env.enc
+Output: .env.dec
+
+Decryption process:
+- Using JIHYUNLAB_SECRET_KEY
+- ENV_KEY ... [OK]
+- ENV_KEY_1 ... [Skipped]
+- ENV_KEY_2 ... [Skipped]
+- Decryption completed successfully
+
+Summary:
+- Using JIHYUNLAB_SECRET_KEY
+- Overwriting existing file
+- .env.enc decrypted to .env.dec
+```
+
+```
+ENV_KEY=ENV_VALUE
+ENV_KEY_1=ENV_VALUE_1
+ENV_KEY_2=ENV_VALUE_2
+```
+
+## @jihyunlab/secret
+
+[@jihyunlab/secret](https://www.jihyunlab.com/library/npm/secret) implements the .env decryption functionality for Node.js applications.
+
+To decrypt the encrypted .env file from @jihyunlab/secret-cli in a Node.js application, you can install and use @jihyunlab/secret.
 
 ```bash
-$ secret decrypt -f file_enc
-
-input: file_enc
-decrypted: file_enc
-file decryption success.
+npm i @jihyunlab/secret
 ```
 
-## Directory encryption
+```
+import { Env } from '@jihyunlab/secret';
 
-When encrypting or decrypting a directory, you can specify which directory to export.
+const cipher = await Env.createCipher();
+const value = await cipher.decrypt(process.env.ENV_KEY);
+```
+
+## @jihyunlab/web-secret
+
+[@jihyunlab/web-secret](https://www.jihyunlab.com/library/npm/web-secret) implements the .env decryption functionality for web applications.
+
+To decrypt the encrypted .env file from @jihyunlab/secret-cli in a web application, you can install and use @jihyunlab/web-secret.
 
 ```bash
-$ secret encrypt -d dir -o dir_enc
-
-input: dir
-encrypted: dir_enc\.env
-encrypted: dir_enc\file
-directory encryption success.
+npm i @jihyunlab/web-secret
 ```
 
-If you encrypt the directory containing the .env with directory encryption, the entire .env file will be encrypted. Dotenv cannot properly recognize .env files if the entire file is encrypted.\
-@jihyunlab/secret-cli provides a separate .env encryption option.
-
-If you do not specify a directory to export to when encrypting, the existing directory will be overwritten with the encrypted results.
-
-```bash
-$ secret encrypt -d dir
-
-input: dir
-encrypted: dir\.env
-encrypted: dir\file
-directory encryption success.
 ```
+import { Env } from '@jihyunlab/web-secret';
 
-## .env encryption
-
-Encrypting the .env file encrypts only the values, not the key, ensuring correct operation of dotenv when run.\
-.env encryption works differently than file or directory encryption.
-
-Encrypt the .env file. However, the file name must start with .env.
-
-```bash
-$ secret encrypt -e .env
-
-input: .env
-encrypted: .env
-.env file encryption success.
-```
-
-```.env
-TEXT=d879f8dfb00b7f9d73bf755569726ed296332765988e28dda664350291f4ca382cff501e82
-```
-
-Encrypts all .env files within a directory. If you enter a directory, all files starting with .env within that directory will be encrypted.
-
-```bash
-$ secret encrypt -e dir
-
-input: dir
-encrypted: dir\.env
-.env directory encryption success.
-```
-
-For more information about using encrypted .env files, see the [@jihyunlab/secret](https://www.npmjs.com/package/@jihyunlab/secret) documentation.
-
-## .secretignore
-
-When encrypting a directory, you can create a .secretignore file to specify files or directories that should not be encrypted.
-
-```.secretignore
-/.git
-/node_modules
-/dist
-.DS_Store
-LICENSE
-README.md
-package.json
-```
-
-Run the command from the directory where .secretignore is located.
-
-```bash
-$ secret encrypt -d .
+const cipher = await Env.createCipher();
+const value = await cipher.decrypt(process.env.ENV_KEY);
 ```
 
 ## Credits

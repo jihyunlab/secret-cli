@@ -1,8 +1,5 @@
 *
-
-!/dist/bin/**/*
-
+!/dist/**/*
 !/package.json
-
 !/LICENCE
 !/README.md
