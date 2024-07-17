@@ -249,9 +249,9 @@ npm i @jihyunlab/web-secret
 ```
 
 ```
-import { Env } from '@jihyunlab/web-secret';
+import { CIPHER, Env } from '@jihyunlab/web-secret';
 
-const cipher = await Env.createCipher();
+const cipher = await Env.createCipher(CIPHER.AES_256_GCM, 'YourSecretKey');
 const value = await cipher.decrypt(process.env.ENV_KEY);
 ```
 
