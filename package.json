@@ -1,6 +1,6 @@
 {
   "name": "@jihyunlab/secret-cli",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "JihyunLab Secret CLI.",
   "license": "MIT",
   "author": "JihyunLab <info@jihyunlab.com> (https://jihyunlab.com)",
@@ -28,7 +28,7 @@
     "decryption"
   ],
   "dependencies": {
-    "@jihyunlab/secret": "^2.0.0",
+    "@jihyunlab/secret": "^2.0.1",
     "commander": "^12.1.0"
   },
   "devDependencies": {

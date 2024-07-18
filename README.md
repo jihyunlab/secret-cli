@@ -15,16 +15,6 @@ The encryption function is implemented with [@jihyunlab/secret](https://www.npmj
 npm i -g @jihyunlab/secret-cli
 ```
 
-## Encryption key
-
-If you register JIHYUNLAB_SECRET_KEY in system or user environment variables, it will be used as the encryption key during encryption.
-
-If you prefer to manage the encryption key separately, you can directly input the encryption key to encrypt or decrypt the .env file.
-
-```bash
-export JIHYUNLAB_SECRET_KEY=YourSecretKey
-```
-
 ## Usage
 
 ```bash
@@ -70,98 +60,7 @@ ENV_KEY_2=ENV_VALUE_2
 
 ### Encrypting all keys
 
-Encrypt all key values in the .env file.
-
-```bash
-secret encrypt --env .env --out .env.enc
-```
-
-```
-Input: .env
-Output: .env.enc
-
-Encryption process:
-- Using JIHYUNLAB_SECRET_KEY
-- ENV_KEY ... [OK]
-- ENV_KEY_1 ... [OK]
-- ENV_KEY_2 ... [OK]
-- Encryption completed successfully
-
-Summary:
-- Using JIHYUNLAB_SECRET_KEY
-- Overwriting existing file
-- .env encrypted to .env.enc
-```
-
-```
-ENV_KEY=8c22dbcce705a1b95df2c7841f6735eba5d91bcecf1c1132ec35fd5a976dd8556763649075
-ENV_KEY_1=17022b50356a3da6bad09e8012830a7078058796fcd75c594a180802320b009385761c7ce66208
-ENV_KEY_2=f4d96b31dbbace4bd769c30a430da7f142c4fa058c565a80d2fb3e101cca29c0f8bfc106076aaa
-```
-
-### Encrypting a specific key
-
-Encrypt specific key values in the .env file.
-
-```bash
-secret encrypt --env .env --key ENV_KEY --out .env.enc
-```
-
-```
-Input: .env
-Output: .env.enc
-
-Encryption process:
-- Using JIHYUNLAB_SECRET_KEY
-- ENV_KEY ... [OK]
-- ENV_KEY_1 ... [Skipped]
-- ENV_KEY_2 ... [Skipped]
-- Encryption completed successfully
-
-Summary:
-- Using JIHYUNLAB_SECRET_KEY
-- Overwriting existing file
-- .env encrypted to .env.enc
-```
-
-```
-ENV_KEY=f175768a27461c527f5ae24b728906f8ce77fc8f82109184a5c2528a5e77ed4159066862e7
-ENV_KEY_1=ENV_VALUE_1
-ENV_KEY_2=ENV_VALUE_2
-```
-
-You can encrypt multiple specific key values at once.
-
-```bash
-secret encrypt --env .env --key ENV_KEY_1 --key ENV_KEY_2 --out .env.enc
-```
-
-```
-Input: .env
-Output: .env.enc
-
-Encryption process:
-- Using JIHYUNLAB_SECRET_KEY
-- ENV_KEY ... [Skipped]
-- ENV_KEY_1 ... [OK]
-- ENV_KEY_2 ... [OK]
-- Encryption completed successfully
-
-Summary:
-- Using JIHYUNLAB_SECRET_KEY
-- Overwriting existing file
-- .env encrypted to .env.enc
-```
-
-```
-ENV_KEY=ENV_VALUE
-ENV_KEY_1=deb8ec8c77e3e1c4a473f63924cc550179283294fb5d933299ecfcbc3673c79e6c19ef218c0a86
-ENV_KEY_2=c11a9a4dfd7d9ed5553b072b1bf491e37c1b3233cb521c113f7fc3d96bb282f2579678c4417cc4
-```
-
-### Entering encryption key directly
-
-You can encrypt using a separately managed encryption key by entering it directly.
+Encrypt all key values in the .env file by directly entering the separately managed encryption key.
 
 ```bash
 secret encrypt --env .env --secret YourSecretKey --out .env.enc
@@ -190,12 +89,72 @@ ENV_KEY_1=d37f8e719afed09d28c19f7b29c42398f5b942623e23082532cd5bc6bcf75625bf73a4
 ENV_KEY_2=3e49f6218bb1220e10d3d4165ef60a0ad43499371ba7d1142d2f65b142c5b96d3dc3a2f0b97244
 ```
 
+### Encrypting a specific key
+
+Encrypt specific key values in the .env file.
+
+```bash
+secret encrypt --env .env --secret YourSecretKey --key ENV_KEY --out .env.enc
+```
+
+```
+Input: .env
+Output: .env.enc
+
+Encryption process:
+- Using input secret
+- ENV_KEY ... [OK]
+- ENV_KEY_1 ... [Skipped]
+- ENV_KEY_2 ... [Skipped]
+- Encryption completed successfully
+
+Summary:
+- Using input secret
+- Overwriting existing file
+- .env encrypted to .env.enc
+```
+
+```
+ENV_KEY=392b8b61b81df7a473869447041520d939c30e59e43181fdbbf8e909d9092481d772c1efd7
+ENV_KEY_1=ENV_VALUE_1
+ENV_KEY_2=ENV_VALUE_2
+```
+
+You can encrypt multiple specific key values at once.
+
+```bash
+secret encrypt --env .env --secret YourSecretKey --key ENV_KEY_1 --key ENV_KEY_2 --out .env.enc
+```
+
+```
+Input: .env
+Output: .env.enc
+
+Encryption process:
+- Using input secret
+- ENV_KEY ... [Skipped]
+- ENV_KEY_1 ... [OK]
+- ENV_KEY_2 ... [OK]
+- Encryption completed successfully
+
+Summary:
+- Using input secret
+- Overwriting existing file
+- .env encrypted to .env.enc
+```
+
+```
+ENV_KEY=ENV_VALUE
+ENV_KEY_1=7839546c9ae8f8bac1031f48b0377a7275b24f3da127deb8bc828deee6d5ac9c29eb72abcb9ee3
+ENV_KEY_2=3ab27ab3d0e7f53a001378daa2f8387633f2688d28775bcda5921792142ea1b8359fb0725da659
+```
+
 ### Decryption
 
 You can decrypt the encrypted .env file using the same method as encryption.
 
 ```bash
-secret decrypt --env .env.enc --key ENV_KEY --out .env.dec
+secret decrypt --env .env.enc --secret YourSecretKey --key ENV_KEY --out .env.dec
 ```
 
 ```
@@ -203,14 +162,14 @@ Input: .env.enc
 Output: .env.dec
 
 Decryption process:
-- Using JIHYUNLAB_SECRET_KEY
+- Using input secret
 - ENV_KEY ... [OK]
 - ENV_KEY_1 ... [Skipped]
 - ENV_KEY_2 ... [Skipped]
 - Decryption completed successfully
 
 Summary:
-- Using JIHYUNLAB_SECRET_KEY
+- Using input secret
 - Overwriting existing file
 - .env.enc decrypted to .env.dec
 ```
@@ -219,6 +178,43 @@ Summary:
 ENV_KEY=ENV_VALUE
 ENV_KEY_1=ENV_VALUE_1
 ENV_KEY_2=ENV_VALUE_2
+```
+
+## Encryption key
+
+If you register JIHYUNLAB_SECRET_KEY in system or user environment variables, it will be used as the encryption key during encryption.
+
+```bash
+export JIHYUNLAB_SECRET_KEY=YourSecretKey
+```
+
+You can encrypt all key values in the .env file using the encryption key registered in the environment variables.
+
+```
+secret encrypt --env .env --out .env.enc
+```
+
+```
+Input: .env
+Output: .env.enc
+
+Encryption process:
+- Using JIHYUNLAB_SECRET_KEY
+- ENV_KEY ... [OK]
+- ENV_KEY_1 ... [OK]
+- ENV_KEY_2 ... [OK]
+- Encryption completed successfully
+
+Summary:
+- Using JIHYUNLAB_SECRET_KEY
+- Overwriting existing file
+- .env encrypted to .env.enc
+```
+
+```
+ENV_KEY=8c22dbcce705a1b95df2c7841f6735eba5d91bcecf1c1132ec35fd5a976dd8556763649075
+ENV_KEY_1=17022b50356a3da6bad09e8012830a7078058796fcd75c594a180802320b009385761c7ce66208
+ENV_KEY_2=f4d96b31dbbace4bd769c30a430da7f142c4fa058c565a80d2fb3e101cca29c0f8bfc106076aaa
 ```
 
 ## @jihyunlab/secret
